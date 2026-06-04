@@ -36,6 +36,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiapX.Infra.EmailSender", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiapX.Infra.CrossCutting", "src\FiapX.Infra.CrossCutting\FiapX.Infra.CrossCutting.csproj", "{1101BE7A-BDE7-4539-B151-BF8F287C524B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiapX.Infra.Messaging", "src\FiapX.Infra.Messaging\FiapX.Infra.Messaging.csproj", "{DA0B6BA3-BA8A-46CF-A2BE-51C98037BB50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,10 @@ Global
 		{1101BE7A-BDE7-4539-B151-BF8F287C524B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1101BE7A-BDE7-4539-B151-BF8F287C524B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1101BE7A-BDE7-4539-B151-BF8F287C524B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA0B6BA3-BA8A-46CF-A2BE-51C98037BB50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA0B6BA3-BA8A-46CF-A2BE-51C98037BB50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA0B6BA3-BA8A-46CF-A2BE-51C98037BB50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA0B6BA3-BA8A-46CF-A2BE-51C98037BB50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,6 +83,7 @@ Global
 		{8EC74C36-DE4C-46A0-90DD-C74E6272C45A} = {E4F67C4A-001E-4F68-BB7C-D0333FC9DC99}
 		{37B4F206-AFDC-4F43-978A-F5320E734F94} = {847FACC6-840A-46DB-B35D-6A8F1AEE759A}
 		{1101BE7A-BDE7-4539-B151-BF8F287C524B} = {847FACC6-840A-46DB-B35D-6A8F1AEE759A}
+		{DA0B6BA3-BA8A-46CF-A2BE-51C98037BB50} = {847FACC6-840A-46DB-B35D-6A8F1AEE759A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B70CF9D5-EFBB-4CAF-A0A0-C261565B489F}

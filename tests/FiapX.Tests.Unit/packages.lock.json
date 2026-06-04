@@ -227,7 +227,8 @@
       "fiapx.application": {
         "type": "Project",
         "dependencies": {
-          "FiapX.Domain": "[1.0.0, )"
+          "FiapX.Domain": "[1.0.0, )",
+          "Microsoft.Extensions.Logging.Abstractions": "[8.0.3, )"
         }
       },
       "fiapx.domain": {

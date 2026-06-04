@@ -2,7 +2,7 @@ using FiapX.Application.Handlers;
 
 namespace FiapX.Worker;
 
-public class Worker(NotificationHandler handler, IHostApplicationLifetime lifetime) : IHostedService
+public class BackgroundWorker(NotificationHandler handler, IHostApplicationLifetime lifetime) : IHostedService
 {
     public async Task StartAsync(CancellationToken cancellationToken)
     {

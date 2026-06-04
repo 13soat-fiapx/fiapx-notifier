@@ -12,7 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FiapX.Application\FiapX.Application.csproj" />
     <ProjectReference Include="..\FiapX.Infra.EmailSender\FiapX.Infra.EmailSender.csproj" />
+    <ProjectReference Include="..\FiapX.Infra.Messaging\FiapX.Infra.Messaging.csproj" />
   </ItemGroup>
 
 </Project>
