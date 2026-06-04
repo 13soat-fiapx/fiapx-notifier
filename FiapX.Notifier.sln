@@ -1,0 +1,84 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiapX.Worker", "src\FiapX.Worker\FiapX.Worker.csproj", "{8047F745-6C86-46A9-BEBB-454B4C8AC8FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiapX.Application", "src\FiapX.Application\FiapX.Application.csproj", "{3390AC0D-3B68-42C9-BB63-B4009CD8A9FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiapX.Domain", "src\FiapX.Domain\FiapX.Domain.csproj", "{EDAD03C5-D9B8-4DEE-AFCE-5A91C179EC99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiapX.Tests.Unit", "tests\FiapX.Tests.Unit\FiapX.Tests.Unit.csproj", "{8EC74C36-DE4C-46A0-90DD-C74E6272C45A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Solution Items", "0. Solution Items", "{6AB245E2-B71E-4620-A20E-FCDBF28727FB}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		.gitattributes = .gitattributes
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+		global.json = global.json
+		.dockerignore = .dockerignore
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Worker Layer", "1. Worker Layer", "{421FCB7F-7691-41C8-BD93-8D369C512DE2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Application Layer", "2. Application Layer", "{D2F88C76-0D50-4C33-BBB9-C08235F39F31}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Domain Layer", "3. Domain Layer", "{8570830F-B102-4451-B737-7854E701C50F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Infra Layer", "4. Infra Layer", "{847FACC6-840A-46DB-B35D-6A8F1AEE759A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Tests Layer", "5. Tests Layer", "{E4F67C4A-001E-4F68-BB7C-D0333FC9DC99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiapX.Infra.EmailSender", "src\FiapX.Infra.EmailSender\FiapX.Infra.EmailSender.csproj", "{37B4F206-AFDC-4F43-978A-F5320E734F94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiapX.Infra.CrossCutting", "src\FiapX.Infra.CrossCutting\FiapX.Infra.CrossCutting.csproj", "{1101BE7A-BDE7-4539-B151-BF8F287C524B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8047F745-6C86-46A9-BEBB-454B4C8AC8FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8047F745-6C86-46A9-BEBB-454B4C8AC8FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8047F745-6C86-46A9-BEBB-454B4C8AC8FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8047F745-6C86-46A9-BEBB-454B4C8AC8FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3390AC0D-3B68-42C9-BB63-B4009CD8A9FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3390AC0D-3B68-42C9-BB63-B4009CD8A9FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3390AC0D-3B68-42C9-BB63-B4009CD8A9FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3390AC0D-3B68-42C9-BB63-B4009CD8A9FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDAD03C5-D9B8-4DEE-AFCE-5A91C179EC99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDAD03C5-D9B8-4DEE-AFCE-5A91C179EC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDAD03C5-D9B8-4DEE-AFCE-5A91C179EC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDAD03C5-D9B8-4DEE-AFCE-5A91C179EC99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EC74C36-DE4C-46A0-90DD-C74E6272C45A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EC74C36-DE4C-46A0-90DD-C74E6272C45A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EC74C36-DE4C-46A0-90DD-C74E6272C45A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EC74C36-DE4C-46A0-90DD-C74E6272C45A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37B4F206-AFDC-4F43-978A-F5320E734F94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37B4F206-AFDC-4F43-978A-F5320E734F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37B4F206-AFDC-4F43-978A-F5320E734F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37B4F206-AFDC-4F43-978A-F5320E734F94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1101BE7A-BDE7-4539-B151-BF8F287C524B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1101BE7A-BDE7-4539-B151-BF8F287C524B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1101BE7A-BDE7-4539-B151-BF8F287C524B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1101BE7A-BDE7-4539-B151-BF8F287C524B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8047F745-6C86-46A9-BEBB-454B4C8AC8FD} = {421FCB7F-7691-41C8-BD93-8D369C512DE2}
+		{3390AC0D-3B68-42C9-BB63-B4009CD8A9FB} = {D2F88C76-0D50-4C33-BBB9-C08235F39F31}
+		{EDAD03C5-D9B8-4DEE-AFCE-5A91C179EC99} = {8570830F-B102-4451-B737-7854E701C50F}
+		{8EC74C36-DE4C-46A0-90DD-C74E6272C45A} = {E4F67C4A-001E-4F68-BB7C-D0333FC9DC99}
+		{37B4F206-AFDC-4F43-978A-F5320E734F94} = {847FACC6-840A-46DB-B35D-6A8F1AEE759A}
+		{1101BE7A-BDE7-4539-B151-BF8F287C524B} = {847FACC6-840A-46DB-B35D-6A8F1AEE759A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B70CF9D5-EFBB-4CAF-A0A0-C261565B489F}
+	EndGlobalSection
+EndGlobal

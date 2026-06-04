@@ -1,0 +1,4 @@
+﻿src/FiapX.Worker/appsettings.Development.json
+src/FiapX.Worker/keys
+src/*/bin
+src/*/obj
