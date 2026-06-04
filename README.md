@@ -10,6 +10,13 @@ Consome a fila SQS `fiapx-{env}-video-status-changed` e envia e-mails via SMTP p
 - Mensageria: Amazon SQS
 - SMTP: Mailpit (local)
 
+```mermaid
+graph TD
+    P[fiapx-processor] -->|publica| Q[SQS: video-status-changed]
+    Q -->|consumido por| W[NotifierWorker\nScaledJob]
+    W -->|envia e-mail| M[Mailpit\nSMTP]
+```
+
 ## Pré-requisitos
 
 Certifique-se de ter provisionado o ambiente executando os scripts do
