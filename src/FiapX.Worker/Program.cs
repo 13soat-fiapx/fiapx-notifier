@@ -1,13 +1,11 @@
 using FiapX.Infra.CrossCutting;
-using FiapX.Infra.Messaging.Extensions;
-using FiapX.Worker;
 
 var builder = Host.CreateApplicationBuilder(args);
-builder.Services.AddHostedService<BackgroundWorker>();
 
-builder.Services.AddMessaging()
+builder.Services
     .AddEmailSender(builder.Configuration)
-    .AddAppServices();
+    .AddAppServices()
+    .AddMessageConsumer(builder.Configuration);
 
 var host = builder.Build();
 host.Run();

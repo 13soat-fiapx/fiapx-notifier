@@ -1,6 +1,7 @@
 ﻿using Amazon.SQS;
 using Amazon.SQS.Model;
 using FiapX.Infra.Messaging.Helpers;
+using FiapX.Infra.Messaging.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -12,7 +13,8 @@ public class ConsumerBackgroundService<T>(
     IAmazonSQS sqsClient,
     QueueUrlResolver urlResolver,
     IServiceScopeFactory scopeFactory,
-    ILogger<ConsumerBackgroundService<T>> logger) : BackgroundService where T : class
+    IHostApplicationLifetime applicationLifetime,
+    ILogger<ConsumerBackgroundService<T>> logger) : BackgroundService where T : class, new()
 {
     private string _queueUrl = string.Empty;
 
@@ -25,21 +27,24 @@ public class ConsumerBackgroundService<T>(
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while (!stoppingToken.IsCancellationRequested)
+        logger.LogInformation("Fetching messages from SQS queue '{QueueUrl}'", _queueUrl);
+
+        var response = await sqsClient.ReceiveMessageAsync(new ReceiveMessageRequest
         {
-            var response = await sqsClient.ReceiveMessageAsync(new ReceiveMessageRequest
-            {
-                QueueUrl = _queueUrl,
-                MaxNumberOfMessages = 10,
-                WaitTimeSeconds = 20,
-            }, stoppingToken);
+            QueueUrl = _queueUrl,
+            MaxNumberOfMessages = 1,
+            WaitTimeSeconds = 20,
+        }, stoppingToken);
 
-            if (response.Messages is null)
-                continue;
-
-            foreach (var sqsMessage in response.Messages)
-                await ProcessMessageAsync(sqsMessage, stoppingToken);
+        if (response.Messages is null)
+        {
+            logger.LogWarning("No messages received from SQS queue '{QueueUrl}'", _queueUrl);
+            applicationLifetime.StopApplication();
+            return;
         }
+
+        await ProcessMessageAsync(response.Messages[0], stoppingToken);
+        applicationLifetime.StopApplication();
     }
 
     private async Task ProcessMessageAsync(Message sqsMessage, CancellationToken cancellationToken)

@@ -65,6 +65,19 @@
           "Testcontainers": "4.11.0"
         }
       },
+      "AWSSDK.Core": {
+        "type": "Transitive",
+        "resolved": "4.0.3.29",
+        "contentHash": "y07n9BHBVRDe3fDAjitnOBPwDwJ5NZ4oOh6ZvOizYWEsJnYcs34FQtTJ70Gt17qTCH86ma5kJdyMZ2lixm/dqg=="
+      },
+      "AWSSDK.SQS": {
+        "type": "Transitive",
+        "resolved": "4.0.2.25",
+        "contentHash": "oYYPNmsFZg+rTKAyX/I1gYn3NTHXsWH1+Tp1H8YN0HalMPwZIDbkm8FTGESJgHjmfq3rdEkXBln96J97JFdB7g==",
+        "dependencies": {
+          "AWSSDK.Core": "[4.0.3.29, 5.0.0)"
+        }
+      },
       "BouncyCastle.Cryptography": {
         "type": "Transitive",
         "resolved": "2.6.2",
@@ -228,11 +241,18 @@
         "type": "Project",
         "dependencies": {
           "FiapX.Domain": "[1.0.0, )",
+          "FiapX.Infra.Messaging": "[1.0.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[8.0.3, )"
         }
       },
       "fiapx.domain": {
         "type": "Project"
+      },
+      "fiapx.infra.messaging": {
+        "type": "Project",
+        "dependencies": {
+          "AWSSDK.SQS": "[4.0.2.25, )"
+        }
       }
     }
   }

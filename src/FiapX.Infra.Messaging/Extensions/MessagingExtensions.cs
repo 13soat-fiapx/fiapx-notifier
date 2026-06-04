@@ -39,7 +39,7 @@ public static class MessagingExtensions
                 new AmazonSQSConfig { RegionEndpoint = RegionEndpoint.GetBySystemName(options.Region) });
         });
 
-        services.AddSingleton<IEventPublisher, EventPublisher>();
+        services.AddSingleton<IMessagePublisher, MessagePublisher>();
         services.AddSingleton<QueueUrlResolver>();
 
         var builder = new MessagingBuilder(services);
@@ -51,7 +51,8 @@ public static class MessagingExtensions
 
 public class MessagingBuilder(IServiceCollection services)
 {
-    public MessagingBuilder AddConsumer<TConsumer, TEvent>() where TConsumer : class, IEventConsumer<TEvent> where TEvent : class
+    public MessagingBuilder AddConsumer<TConsumer, TEvent>()
+        where TConsumer : class, IEventConsumer<TEvent> where TEvent : class, new()
     {
         services.AddScoped<IEventConsumer<TEvent>, TConsumer>();
         services.AddHostedService<ConsumerBackgroundService<TEvent>>();

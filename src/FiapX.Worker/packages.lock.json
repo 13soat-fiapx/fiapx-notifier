@@ -336,6 +336,7 @@
         "type": "Project",
         "dependencies": {
           "FiapX.Domain": "[1.0.0, )",
+          "FiapX.Infra.Messaging": "[1.0.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[8.0.3, )"
         }
       },

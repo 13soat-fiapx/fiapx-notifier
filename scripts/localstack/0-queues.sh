@@ -1,7 +1,7 @@
 #!/bin/bash
 
 QUEUES=(
-  'fiapx-dev-video-status-changed'
+  'fiapx-dev-video-processing-completed'
 )
 
 for QUEUE in "${QUEUES[@]}"; do
