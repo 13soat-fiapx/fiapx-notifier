@@ -1,11 +1,18 @@
 ﻿namespace FiapX.Infra.Messaging.Models;
 
-public abstract class MessageBase<T>(T payload, int eventVersion = 1) where T : class, new()
+public class MessageBase<T> where T : class
 {
-    public T Payload { get; set; } = payload;
-    public int EventVersion { get; } = eventVersion;
+    public required T Payload { get; init; }
+    public required EventHeaders Headers { get; init; }
+}
 
-    protected MessageBase() : this(new T())
-    {
-    }
+public sealed class EventHeaders
+{
+    public required string EventId { get; init; }
+    public required string EventType { get; init; }
+    public required string Traceparent { get; init; }
+    public required DateTimeOffset OccurredAt { get; init; }
+    public required string Source { get; init; }
+    public string? Tracestate { get; init; }
+    public string? Baggage { get; init; }
 }

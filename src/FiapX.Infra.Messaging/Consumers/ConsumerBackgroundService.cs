@@ -14,9 +14,10 @@ public class ConsumerBackgroundService<T>(
     QueueUrlResolver urlResolver,
     IServiceScopeFactory scopeFactory,
     IHostApplicationLifetime applicationLifetime,
-    ILogger<ConsumerBackgroundService<T>> logger) : BackgroundService where T : class, new()
+    ILogger<ConsumerBackgroundService<T>> logger) : BackgroundService where T : class
 {
     private string _queueUrl = string.Empty;
+    private readonly JsonSerializerOptions _serializerOptions = new(JsonSerializerDefaults.Web);
 
     public override async Task StartAsync(CancellationToken cancellationToken)
     {
@@ -57,10 +58,10 @@ public class ConsumerBackgroundService<T>(
             logger.LogInformation("Processing message '{MessageId}' for event '{EventType}'",
                 sqsMessage.MessageId, typeof(T).Name);
 
-            var message = JsonSerializer.Deserialize<T>(sqsMessage.Body) ??
+            var message = JsonSerializer.Deserialize<MessageBase<T>>(sqsMessage.Body, _serializerOptions) ??
                           throw new InvalidOperationException($"Failed to deserialize message body to '{typeof(T).Name}'.");
 
-            await consumer.ConsumeAsync(message, cancellationToken);
+            await consumer.ConsumeAsync(message.Payload, cancellationToken);
 
             await sqsClient.DeleteMessageAsync(_queueUrl, sqsMessage.ReceiptHandle, cancellationToken);
 

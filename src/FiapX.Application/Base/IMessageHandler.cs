@@ -1,4 +1,4 @@
-﻿namespace FiapX.Domain.Base;
+﻿namespace FiapX.Application.Base;
 
 public interface IMessageHandler
 {

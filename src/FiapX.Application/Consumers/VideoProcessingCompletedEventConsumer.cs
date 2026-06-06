@@ -1,12 +1,20 @@
-﻿using FiapX.Domain.Events;
+﻿using FiapX.Application.Services;
+using FiapX.Domain.Events;
 using FiapX.Infra.Messaging.Consumers;
+using Microsoft.Extensions.Logging;
 
 namespace FiapX.Application.Consumers;
 
-public class VideoProcessingCompletedEventConsumer : IEventConsumer<VideoProcessingCompletedEvent>
+public class VideoProcessingCompletedEventConsumer(
+    ILogger<VideoProcessingCompletedEventConsumer> logger,
+    NotificationAppService service) : IEventConsumer<VideoProcessingCompletedEvent>
 {
-    public Task ConsumeAsync(VideoProcessingCompletedEvent message, CancellationToken cancellationToken = default)
+    public async Task ConsumeAsync(VideoProcessingCompletedEvent message, CancellationToken cancellationToken = default)
     {
-        return Task.CompletedTask;
+        logger.LogInformation("Processing video processing completed event for video with ID '{VideoId}'", message.ProcessingJobId);
+        await service.ProcessMessage(message, cancellationToken);
+
+        logger.LogInformation("Video processing completed event processed successfully for video with ID '{VideoId}'",
+            message.ProcessingJobId);
     }
 }

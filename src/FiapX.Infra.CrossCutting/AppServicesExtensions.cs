@@ -1,4 +1,4 @@
-﻿using FiapX.Domain.Base;
+﻿using FiapX.Application.Base;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FiapX.Infra.CrossCutting;
