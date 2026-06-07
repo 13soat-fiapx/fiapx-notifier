@@ -341,7 +341,10 @@
         }
       },
       "fiapx.domain": {
-        "type": "Project"
+        "type": "Project",
+        "dependencies": {
+          "FiapX.Infra.EmailSender": "[1.0.0, )"
+        }
       },
       "fiapx.infra.crosscutting": {
         "type": "Project",

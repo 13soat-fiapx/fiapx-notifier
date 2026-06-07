@@ -1,6 +1,7 @@
 ﻿param (
+  [Parameter(Mandatory)]
   [ValidateSet('succeeded', 'failed')]
-  [string]$Status = 'succeeded',
+  [string]$Status,
   [string]$ProcessingJobId = '8f160f70-b26b-4eb2-8ff9-c69b4f8d2e0e'
 )
 

@@ -12,7 +12,7 @@ public class VideoProcessingCompletedEventConsumer(
     public async Task ConsumeAsync(VideoProcessingCompletedEvent message, CancellationToken cancellationToken = default)
     {
         logger.LogInformation("Processing video processing completed event for video with ID '{VideoId}'", message.ProcessingJobId);
-        await service.ProcessMessage(message, cancellationToken);
+        await service.SendEmailMessage(message, cancellationToken);
 
         logger.LogInformation("Video processing completed event processed successfully for video with ID '{VideoId}'",
             message.ProcessingJobId);

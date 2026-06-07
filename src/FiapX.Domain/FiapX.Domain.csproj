@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FiapX.Infra.EmailSender\FiapX.Infra.EmailSender.csproj" />
+  </ItemGroup>
+
 </Project>
