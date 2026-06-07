@@ -12,11 +12,14 @@ public class EmailSenderService(EmailSenderOptions options) : IEmailSenderServic
 
         using var client = new SmtpClient();
 
+        var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        cts.CancelAfter(TimeSpan.FromSeconds(10));
+
         try
         {
-            await client.ConnectAsync(options.SmtpServer, options.SmtpPort, options.SslRequired, cancellationToken);
+            await client.ConnectAsync(options.SmtpServer, options.SmtpPort, options.SslRequired, cts.Token);
             if (!string.IsNullOrWhiteSpace(options.UserName) && !string.IsNullOrWhiteSpace(options.Password))
-                await client.AuthenticateAsync(options.UserName, options.Password, cancellationToken);
+                await client.AuthenticateAsync(options.UserName, options.Password, cts.Token);
 
             var mimeMessage = new MimeMessage();
             mimeMessage.From.Add(new MailboxAddress(options.SenderInformation.Name, options.SenderInformation.Address));
@@ -24,7 +27,7 @@ public class EmailSenderService(EmailSenderOptions options) : IEmailSenderServic
             mimeMessage.Subject = message.Subject;
             mimeMessage.Body = new BodyBuilder { HtmlBody = message.Body }.ToMessageBody();
 
-            await client.SendAsync(mimeMessage, cancellationToken);
+            await client.SendAsync(mimeMessage, cts.Token);
         }
         finally
         {
