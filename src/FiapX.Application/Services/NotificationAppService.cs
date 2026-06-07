@@ -1,15 +1,15 @@
 ﻿using FiapX.Application.Base;
+using FiapX.Application.Options;
 using FiapX.Domain.Events;
 using FiapX.Domain.Templates;
 using FiapX.Infra.EmailSender;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace FiapX.Application.Services;
 
-public class NotificationAppService(IEmailSenderService emailSender, IConfiguration configuration) : IAppService
+public class NotificationAppService(IEmailSenderService emailSender, IOptions<EmailContent> contentOptions) : IAppService
 {
-    private readonly string _downloadBaseUrl = configuration.GetValue<string>("DownloadBaseUrl")?.TrimEnd('/') ??
-                                               throw new InvalidOperationException("DownloadBaseUrl is not configured.");
+    private readonly string _downloadBaseUrl = contentOptions.Value.DownloadBaseUrl;
 
     public async Task SendEmailMessage(VideoProcessingCompletedEvent message, CancellationToken cancellationToken)
     {
@@ -18,14 +18,16 @@ public class NotificationAppService(IEmailSenderService emailSender, IConfigurat
             "succeeded" => VideoProcessingEmailTemplate.Success(
                 recipient: message.User.Email,
                 userName: message.User.Name,
-                downloadUrl: $"{_downloadBaseUrl}/{message.ProcessingJobId}"),
+                downloadUrl: $"{_downloadBaseUrl}/{message.ProcessingJobId}",
+                contentOptions.Value.LogoUrl),
 
             "failed" => VideoProcessingEmailTemplate.Failure(
                 recipient: message.User.Email,
                 userName: message.User.Name,
-                reason: message.Messages.FirstOrDefault(m => m.Severity == "error")?.Message),
+                reason: message.Messages.FirstOrDefault(m => m.Severity == "error")?.Message,
+                contentOptions.Value.LogoUrl),
 
-            _ => throw new InvalidOperationException($"Unexpected status '{message.Status}'.")
+            _ => throw new InvalidOperationException($"Unexpected status '{message.Status}'."),
         };
 
         await emailSender.SendAsync(emailMessage, cancellationToken);
