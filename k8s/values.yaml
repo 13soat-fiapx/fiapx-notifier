@@ -1,0 +1,30 @@
+app:
+  project: fiapx
+  name: notifier
+  version: 1.0.0
+  env: dev
+
+image:
+  repository: ""
+  tag: latest
+
+email:
+  smtpServer: mailpit-smtp
+  smtpPort: 25
+  sslRequired: false
+  senderName: FIAP X
+  senderAddress: "postmaster@fiapx.io"
+  logoUrl: "http://d2nyagk7gn75jo.cloudfront.net/logo_video.svg"
+  downloadBaseUrl: "http://d2nyagk7gn75jo.cloudfront.net/videos"
+
+aws:
+  useLocalstack: false
+  region: us-east-1
+
+queue:
+  event: VideoProcessingCompleted
+  name: "video-processing-completed"
+  url: "https://sqs.us-east-1.amazonaws.com/000000000000/fiapx-dev-video-processing-completed"
+
+secrets:
+  clusterSecretStore: fiapx-aws-secrets
