@@ -64,13 +64,13 @@ O chart possui os seguintes valores:
 | `email.senderName`        | Nome do remetente de e-mail                           | `FIAP X`                 |
 | `email.senderAddress`     | Endereço do remetente de e-mail                       | `postmaster@fiapx.io`    |
 | `email.logoUrl`           | URL da logomarca no e-mail                            | (veja `values.yaml`)     |
+| `email.downloadBaseUrl`   | URL base para download de vídeos no e-mail            | (veja `values.yaml`)     |
 | `aws.useLocalstack`       | Indica se deve usar Localstack                        | `false`                  |
 | `aws.region`              | Região da AWS                                         | `us-east-1`              |
 | `queue.event`             | Chave do evento de mensageria                         | `VideoProcessingCompleted`|
 | `queue.name`              | Nome da fila SQS (sufixo)                             | `video-processing-completed`|
-| `queue.url`               | URL completa da fila SQS (Obrigatório)                |                          |
+| `queue.url`               | URL completa da fila SQS (**Obrigatório**)            |                          |
 | `secrets.clusterSecretStore`| Nome do ClusterSecretStore do ESO                   | `fiapx-aws-secrets`      |
-| `secrets.emailSecretNameSufix`  | Nome da secret de e-mail no Secrets Manager (sufixo) | `email`                  |
 
 O ESO busca as secrets do SMTP no AWS Secrets Manager seguindo o padrão:
 - Secret: `$appProject-$appEnv-email` (ex: `fiapx-dev-email`)

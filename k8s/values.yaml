@@ -24,7 +24,7 @@ aws:
 queue:
   event: VideoProcessingCompleted
   name: "video-processing-completed"
-  url: "https://sqs.us-east-1.amazonaws.com/000000000000/fiapx-dev-video-processing-completed"
+  url: ""
 
 secrets:
   clusterSecretStore: fiapx-aws-secrets

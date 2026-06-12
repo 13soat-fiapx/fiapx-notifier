@@ -16,8 +16,8 @@ data:
   EmailSenderOptions__SenderInformation__Name: {{ .Values.email.senderName | quote }}
   EmailSenderOptions__SenderInformation__Address: {{ .Values.email.senderAddress | quote }}
   EmailContent__LogoUrl: {{ .Values.email.logoUrl | quote }}
-  EmailContent__DownloadBaseUrl: "false"
-  AwsCredentials__UseLocalstack: {{ .Values.aws.useLocalstack | quote }}
+  EmailContent__DownloadBaseUrl: {{ .Values.email.downloadBaseUrl | quote }}
+  AwsCredentials__UseLocalstack: "false"
   MessagingOptions__QueueNames__{{ $.Values.queue.event }}: "{{ $.Values.app.project }}-{{ $.Values.app.env }}-{{ $.Values.queue.name }}"
   {{- range $key, $value := .Values.queueNames }}
   MessagingOptions__QueueNames__{{ $key }}: "{{ $.Values.app.project }}-{{ $.Values.app.env }}-{{ $value }}"

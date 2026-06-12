@@ -49,7 +49,7 @@ spec:
   triggers:
     - type: aws-sqs-queue
       metadata:
-        queueURL: {{ .Values.queue.url | quote }}
+        queueURL: {{ .Values.queue.url | required "Parameter queue.url is required." | quote }}
         queueLength: "1"
         awsRegion: {{ .Values.aws.region | quote }}
       authenticationRef:
