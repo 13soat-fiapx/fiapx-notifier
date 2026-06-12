@@ -48,6 +48,14 @@ jobs:
     outputs:
       queue-url: ${{ steps.get-queue-url.outputs.queue-url }}
     steps:
+      - name: Configure AWS Credentials
+        id: aws-credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ vars.AWS_REGION }}
       - name: Get queue URL
         id: get-queue-url
         uses: fiapx-13soat/fiapx-infra/.github/actions/get-sqs-queue-url@main
