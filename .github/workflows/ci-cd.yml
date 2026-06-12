@@ -21,7 +21,7 @@ permissions:
 jobs:
   tests:
     name: Run tests
-    uses: fiapx-13soat/fiapx-infra/.github/workflows/dotnet-tests.yml@main
+    uses: 13soat-fiapx/fiapx-infra/.github/workflows/dotnet-tests.yml@main
     with:
       enable_sonar: ${{ (github.event_name == 'pull_request' && github.base_ref == 'main') || (github.event_name == 'workflow_dispatch' && github.ref_name == 'main') }}
       sonar_project_key: ${{ vars.SONAR_PROJECT_KEY }}
@@ -38,7 +38,7 @@ jobs:
         uses: actions/checkout@v5
       - name: Resolve Environment
         id: resolve
-        uses: fiapx-13soat/fiapx-infra/.github/actions/resolve-environment@main
+        uses: 13soat-fiapx/fiapx-infra/.github/actions/resolve-environment@main
 
   resolve-queue-url:
     name: Resolve queue URL
@@ -58,7 +58,7 @@ jobs:
           aws-region: ${{ vars.AWS_REGION }}
       - name: Get queue URL
         id: get-queue-url
-        uses: fiapx-13soat/fiapx-infra/.github/actions/get-sqs-queue-url@main
+        uses: 13soat-fiapx/fiapx-infra/.github/actions/get-sqs-queue-url@main
         with:
           queue-name: video-processing-completed
           environment: ${{ needs.resolve-environment.outputs.environment }}
@@ -69,7 +69,7 @@ jobs:
       - tests
       - resolve-environment
       - resolve-queue-url
-    uses: fiapx-13soat/fiapx-infra/.github/workflows/deploy-helm.yml@main
+    uses: 13soat-fiapx/fiapx-infra/.github/workflows/deploy-helm.yml@main
     with:
       environment: ${{ needs.resolve-environment.outputs.environment }}
       service-name: ${{ vars.SERVICE_NAME }}
