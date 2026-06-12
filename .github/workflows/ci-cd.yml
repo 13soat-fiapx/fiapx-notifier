@@ -1,0 +1,69 @@
+name: CI/CD Pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - release
+      - develop
+  pull_request:
+    branches:
+      - main
+      - release
+      - develop
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
+jobs:
+  tests:
+    name: Run tests
+    uses: fiapx-13soat/fiapx-infra/.github/workflows/dotnet-tests.yml@main
+    with:
+      enable_sonar: ${{ (github.event_name == 'pull_request' && github.base_ref == 'main') || (github.event_name == 'workflow_dispatch' && github.ref_name == 'main') }}
+      sonar_project_key: ${{ vars.SONAR_PROJECT_KEY }}
+    secrets: inherit
+
+  resolve-environment:
+    name: Resolve environment name
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ steps.resolve.outputs.environment }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Resolve Environment
+        id: resolve
+        uses: fiapx-13soat/fiapx-infra/.github/actions/resolve-environment@main
+
+  resolve-queue-url:
+    name: Resolve queue URL
+    needs:
+      - resolve-environment
+    runs-on: ubuntu-latest
+    outputs:
+      queue-url: ${{ steps.get-queue-url.outputs.queue-url }}
+    steps:
+      - name: Get queue URL
+        id: get-queue-url
+        uses: fiapx-13soat/fiapx-infra/.github/actions/get-sqs-queue-url@main
+        with:
+          queue-name: video-processing-completed
+          environment: ${{ needs.resolve-environment.outputs.environment }}
+
+  deploy:
+    name: Deploy Helm
+    needs:
+      - tests
+      - resolve-environment
+      - resolve-queue-url
+    uses: fiapx-13soat/fiapx-infra/.github/workflows/deploy-helm.yml@main
+    with:
+      environment: ${{ needs.resolve-environment.outputs.environment }}
+      service-name: ${{ vars.SERVICE_NAME }}
+      additional-args: "--set queue.url=${{ needs.resolve-queue-url.outputs.queue-url }}"
+    secrets: inherit
