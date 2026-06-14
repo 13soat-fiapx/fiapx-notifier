@@ -24,7 +24,7 @@ jobs:
     uses: 13soat-fiapx/fiapx-infra/.github/workflows/dotnet-tests.yml@main
     with:
       enable_sonar: ${{ (github.event_name == 'pull_request' && github.base_ref == 'main') || (github.event_name == 'workflow_dispatch' && github.ref_name == 'main') }}
-      sonar_project_key: ${{ vars.SONAR_PROJECT_KEY }}
+      sonar_project_key: "fiapx-${{ vars.SERVICE_NAME }}"
     secrets: inherit
 
   resolve-environment:
