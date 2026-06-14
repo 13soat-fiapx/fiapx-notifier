@@ -21,4 +21,10 @@ public static class TestProperties
         await _sqsContainer.StartAsync();
         QueueUrl = await _sqsContainer.CreateQueueAsync(QueueName);
     }
+
+    [AssemblyCleanup]
+    public static async Task Cleanup()
+    {
+        await _sqsContainer.DisposeAsync();
+    }
 }
