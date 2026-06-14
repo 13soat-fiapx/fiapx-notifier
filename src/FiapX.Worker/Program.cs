@@ -4,7 +4,7 @@ var builder = Host.CreateApplicationBuilder(args);
 
 builder.Services
     .AddEmailSender(builder.Configuration)
-    .AddAppServices()
+    .AddAppServices(builder.Configuration)
     .AddMessageConsumer(builder.Configuration)
     .AddLogging();
 

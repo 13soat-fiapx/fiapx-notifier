@@ -4,13 +4,14 @@ namespace FiapX.Domain.Templates;
 
 public static class VideoProcessingEmailTemplate
 {
-    public static EmailMessage Success(string recipient, string userName, string downloadUrl)
+    public static EmailMessage Success(string recipient, string userName, string downloadUrl, string logoUrl)
     {
         return new EmailMessage
         {
             Recipient = recipient,
             Subject   = "Seu vídeo está pronto",
             Body      = $"""
+                         <img src="{logoUrl}" alt="FIAP X" />
                          <h2>Olá, {userName}!</h2>
                          <p>O processamento do seu vídeo foi concluído com sucesso.</p>
                          <p>Acesse o sistema para realizar o download:<br>
@@ -22,7 +23,7 @@ public static class VideoProcessingEmailTemplate
         };
     }
 
-    public static EmailMessage Failure(string recipient, string userName, string? reason)
+    public static EmailMessage Failure(string recipient, string userName, string? reason, string logoUrl)
     {
         var reasonLine = string.IsNullOrWhiteSpace(reason)
             ? "Nenhum detalhe adicional disponível."
@@ -33,6 +34,7 @@ public static class VideoProcessingEmailTemplate
             Recipient = recipient,
             Subject   = "Falha no processamento do vídeo",
             Body      = $"""
+                         <img src="{logoUrl}" alt="FIAP X" />
                          <h2>Olá, {userName}!</h2>
                          <p>Ocorreu um erro ao processar o seu vídeo:</p>
                          <p><code>{reasonLine}</code></p>
