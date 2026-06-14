@@ -9,4 +9,4 @@ builder.Services
     .AddLogging();
 
 var host = builder.Build();
-host.Run();
+await host.RunAsync();

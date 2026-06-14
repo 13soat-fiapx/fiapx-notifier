@@ -12,7 +12,7 @@ public class EmailSenderService(EmailSenderOptions options) : IEmailSenderServic
 
         using var client = new SmtpClient();
 
-        var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         cts.CancelAfter(TimeSpan.FromSeconds(10));
 
         try

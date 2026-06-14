@@ -11,8 +11,6 @@ public static class EmailSenderExtensions
         var emailSenderOptions = configuration.GetSection(nameof(EmailSenderOptions)).Get<EmailSenderOptions>()!;
         services.AddScoped<IEmailSenderService>(_ => new EmailSenderService(emailSenderOptions));
 
-        // services.AddScoped<IEmailService, EmailService>();
-
         return services;
     }
 }
