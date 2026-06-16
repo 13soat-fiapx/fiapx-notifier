@@ -15,7 +15,7 @@ public class EmailDeliveryTests
 
     private static readonly HttpClient MailpitClient = new();
 
-    private static readonly SmtpTestConfig SmtpConfig = new(
+    private static SmtpTestConfig SmtpConfig => new(
         Host: TestProperties.SmtpHost,
         Port: TestProperties.SmtpPort,
         UserName: TestSmtpServerContainer.SmtpUserName,

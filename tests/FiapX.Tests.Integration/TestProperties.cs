@@ -36,7 +36,9 @@ public static class TestProperties
     [AssemblyCleanup]
     public static async Task Cleanup()
     {
-        await _sqsContainer.DisposeAsync();
-        await _smtpContainer.DisposeAsync();
+        await Task.WhenAll(
+            _sqsContainer.DisposeAsync().AsTask(),
+            _smtpContainer.DisposeAsync().AsTask()
+        );
     }
 }
