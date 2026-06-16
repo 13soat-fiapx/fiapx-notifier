@@ -6,18 +6,22 @@ using Microsoft.Extensions.Logging;
 
 namespace FiapX.Tests.Integration.Helpers;
 
+public record SmtpTestConfig(string Host, int Port, string UserName, string Password);
+
 public static class WorkerHost
 {
-    public static IHost Build(string sqsEndpoint, string queueName)
+    public static IHost Build(string sqsEndpoint, string queueName, SmtpTestConfig? smtp = null)
     {
         var config = new Dictionary<string, string?>
         {
-            ["EmailSenderOptions:Enabled"] = "false",
-            ["EmailSenderOptions:SmtpServer"] = "localhost",
-            ["EmailSenderOptions:SmtpPort"] = "1025",
+            ["EmailSenderOptions:Enabled"] = smtp is not null ? "true" : "false",
+            ["EmailSenderOptions:SmtpServer"] = smtp?.Host ?? "localhost",
+            ["EmailSenderOptions:SmtpPort"] = smtp?.Port.ToString() ?? "1025",
             ["EmailSenderOptions:SslRequired"] = "false",
             ["EmailSenderOptions:SenderInformation:Name"] = "Test",
             ["EmailSenderOptions:SenderInformation:Address"] = "test@test.com",
+            ["EmailSenderOptions:UserName"] = smtp?.UserName,
+            ["EmailSenderOptions:Password"] = smtp?.Password,
             ["EmailContent:LogoUrl"] = "https://example.com/logo.svg",
             ["EmailContent:DownloadBaseUrl"] = "https://example.com/videos",
             ["AwsCredentials:Region"] = "us-east-1",
