@@ -25,7 +25,7 @@ public class NotificationAppService(IEmailSenderService emailSender, IOptions<Em
                 "succeeded" => VideoProcessingEmailTemplate.Success(
                     recipient: message.User.Email,
                     userName: message.User.Name,
-                    downloadUrl: $"{_downloadBaseUrl}/{message.ProcessingJobId}",
+                    downloadUrl: _downloadBaseUrl,
                     contentOptions.Value.LogoUrl),
 
                 "failed" => VideoProcessingEmailTemplate.Failure(
