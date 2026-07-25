@@ -2,9 +2,10 @@
 
 O chart do projeto é responsável por criar os recursos no Kubernetes para o processamento de filas SQS utilizando KEDA (`ScaledJob`).
 
-Ao instalar o chart, o seguinte hook é executado:
+Ao instalar o chart, os seguintes hooks são executados:
 
 1. `aws-secret`: Secret que reflete as credenciais da AWS do namespace `external-secrets` para o namespace da aplicação (necessário para o KEDA e ESO).
+2. `datadog-secret`: Secret que reflete a API key do Datadog do namespace `observability` para o namespace da aplicação (usada pela observabilidade via OTLP).
 
 Somente após o hook ter rodado com sucesso é que os demais recursos são provisionados:
 
@@ -70,6 +71,7 @@ O chart possui os seguintes valores:
 | `queue.event`             | Chave do evento de mensageria                         | `VideoProcessingCompleted`|
 | `queue.name`              | Nome da fila SQS (sufixo)                             | `video-processing-completed`|
 | `queue.url`               | URL completa da fila SQS (**Obrigatório**)            |                          |
+| `datadog.otlpEndpoint`    | Endpoint do intake OTLP do Datadog                    | `https://otlp.us5.datadoghq.com` |
 | `secrets.clusterSecretStore`| Nome do ClusterSecretStore do ESO                   | `fiapx-aws-secrets`      |
 
 O ESO busca as secrets do SMTP no AWS Secrets Manager seguindo o padrão:

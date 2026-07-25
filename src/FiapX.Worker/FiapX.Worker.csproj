@@ -18,5 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\FiapX.Application\FiapX.Application.csproj" />
     <ProjectReference Include="..\FiapX.Infra.CrossCutting\FiapX.Infra.CrossCutting.csproj" />
+    <ProjectReference Include="..\FiapX.Infra.Observability\FiapX.Infra.Observability.csproj" />
   </ItemGroup>
 </Project>

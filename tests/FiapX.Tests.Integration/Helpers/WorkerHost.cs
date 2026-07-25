@@ -1,4 +1,5 @@
 using FiapX.Infra.CrossCutting;
+using FiapX.Infra.Observability;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,7 +13,45 @@ public static class WorkerHost
 {
     public static IHost Build(string sqsEndpoint, string queueName, SmtpTestConfig? smtp = null)
     {
-        var config = new Dictionary<string, string?>
+        return Host.CreateDefaultBuilder()
+            .ConfigureAppConfiguration(cfg => cfg.AddInMemoryCollection(BuildConfig(sqsEndpoint, queueName, smtp)))
+            .ConfigureLogging(logging => logging.SetMinimumLevel(LogLevel.Warning))
+            .ConfigureServices((ctx, services) =>
+            {
+                services
+                    .AddEmailSender(ctx.Configuration)
+                    .AddAppServices(ctx.Configuration)
+                    .AddMessageConsumer(ctx.Configuration);
+            })
+            .Build();
+    }
+
+    public static IHost BuildWithObservability(
+        string sqsEndpoint,
+        string queueName,
+        Dictionary<string, string?>? datadogConfig = null,
+        SmtpTestConfig? smtp = null)
+    {
+        var builder = Host.CreateApplicationBuilder();
+
+        builder.Configuration.AddInMemoryCollection(BuildConfig(sqsEndpoint, queueName, smtp));
+
+        if (datadogConfig is not null)
+            builder.Configuration.AddInMemoryCollection(datadogConfig);
+
+        builder.Logging.SetMinimumLevel(LogLevel.Warning);
+        builder.AddObservability(ObservabilityProfile.Worker);
+
+        builder.Services
+            .AddEmailSender(builder.Configuration)
+            .AddAppServices(builder.Configuration)
+            .AddMessageConsumer(builder.Configuration);
+
+        return builder.Build();
+    }
+
+    private static Dictionary<string, string?> BuildConfig(string sqsEndpoint, string queueName, SmtpTestConfig? smtp) =>
+        new()
         {
             ["EmailSenderOptions:Enabled"] = smtp is not null ? "true" : "false",
             ["EmailSenderOptions:SmtpServer"] = smtp?.Host ?? "localhost",
@@ -33,17 +72,4 @@ public static class WorkerHost
             ["MessagingOptions:DisableConsumers"] = "false",
             ["MessagingOptions:QueueNames:VideoProcessingCompleted"] = queueName,
         };
-
-        return Host.CreateDefaultBuilder()
-            .ConfigureAppConfiguration(cfg => cfg.AddInMemoryCollection(config))
-            .ConfigureLogging(logging => logging.SetMinimumLevel(LogLevel.Warning))
-            .ConfigureServices((ctx, services) =>
-            {
-                services
-                    .AddEmailSender(ctx.Configuration)
-                    .AddAppServices(ctx.Configuration)
-                    .AddMessageConsumer(ctx.Configuration);
-            })
-            .Build();
-    }
 }

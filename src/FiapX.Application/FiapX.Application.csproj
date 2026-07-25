@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FiapX.Domain\FiapX.Domain.csproj" />
     <ProjectReference Include="..\FiapX.Infra.Messaging\FiapX.Infra.Messaging.csproj" />
+    <ProjectReference Include="..\FiapX.Infra.Observability\FiapX.Infra.Observability.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,8 +8,10 @@ data:
   {{- $envMap := dict "dev" "Development" "stg" "Staging" "prod" "Production" }}
   {{- $envName := index $envMap .Values.app.env | default "Development" }}
   ASPNETCORE_ENVIRONMENT: {{ $envName | quote }}
+  DOTNET_ENVIRONMENT: {{ $envName | quote }}
   AppInfo__Name: {{ .Values.app.name | quote }}
   AppInfo__Version: {{ .Values.app.version | quote }}
+  Datadog__OtlpEndpoint: {{ .Values.datadog.otlpEndpoint | quote }}
   EmailSenderOptions__SmtpServer: {{ .Values.email.smtpServer | quote }}
   EmailSenderOptions__SmtpPort: {{ .Values.email.smtpPort | quote }}
   EmailSenderOptions__SslRequired: {{ .Values.email.sslRequired | quote }}
