@@ -2,7 +2,7 @@
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
-COPY --parents src/**/*.csproj .
+COPY --parents src/**/*.csproj src/**/packages.lock.json ./
 RUN dotnet restore src/FiapX.Worker/FiapX.Worker.csproj --locked-mode
 
 COPY src src

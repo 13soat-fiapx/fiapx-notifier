@@ -2,7 +2,7 @@
 
 Serviço responsável por notificar usuários sobre o resultado do processamento de vídeos no ecossistema FIAP X.
 
-Consome a fila SQS `fiapx-{env}-video-status-changed` e envia e-mails via SMTP para os usuários afetados.
+Consome a fila SQS `fiapx-{env}-video-processing-completed` e envia e-mails via SMTP para os usuários afetados.
 
 ## Definição do ambiente
 
@@ -12,7 +12,7 @@ Consome a fila SQS `fiapx-{env}-video-status-changed` e envia e-mails via SMTP p
 
 ```mermaid
 graph TD
-    P[fiapx-processor] -->|publica| Q[SQS: video-status-changed]
+    P[fiapx-processor] -->|publica| Q[SQS: video-processing-completed]
     Q -->|consumido por| W[NotifierWorker\nScaledJob]
     W -->|envia e-mail| M[Mailpit\nSMTP]
 ```
@@ -46,9 +46,27 @@ Execute o script PowerShell para compilar a imagem e publicar no ECR.
 
 ### Consumers
 
-| Fila                                    | Descrição                                                  |
-|-----------------------------------------|------------------------------------------------------------|
-| `fiapx-{env}-video-status-changed`      | Notifica o usuário sobre o resultado do processamento.     |
+| Fila                                      | Descrição                                                  |
+|-------------------------------------------|------------------------------------------------------------|
+| `fiapx-{env}-video-processing-completed`  | Notifica o usuário sobre o resultado do processamento.     |
+
+## Observabilidade
+
+O serviço exporta traces, métricas e logs via OpenTelemetry direto para o intake OTLP do
+Datadog, sem Agent ou Collector. A integração é encapsulada no projeto
+`FiapX.Infra.Observability`.
+
+Em execução local, a observabilidade fica desligada por padrão (a aplicação loga
+`Observability disabled: Datadog API key or OTLP endpoint not configured` na inicialização).
+Em cluster, a key chega via secret `observability/datadog-api-key`, espelhada para o namespace
+do serviço pelo Reflector como `notifier-datadog`; se a secret não existir, o serviço sobe
+normalmente com a observabilidade desligada.
+
+Por ser um `ScaledJob` de execução única, o worker faz `ForceFlush` do `TracerProvider` e do
+`MeterProvider` antes de encerrar, garantindo que a telemetria da execução seja exportada.
+
+Detalhes de arquitetura, configuração e troubleshooting:
+[Observabilidade](https://github.com/13soat-fiapx/fiapx-docs/blob/main/docs/observability.md).
 
 ## Links úteis
 

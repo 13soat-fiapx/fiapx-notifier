@@ -26,5 +26,8 @@ queue:
   name: "video-processing-completed"
   url: ""
 
+datadog:
+  otlpEndpoint: "https://otlp.us5.datadoghq.com"
+
 secrets:
   clusterSecretStore: fiapx-aws-secrets

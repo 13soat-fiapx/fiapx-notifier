@@ -11,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FiapX.Infra.Observability\FiapX.Infra.Observability.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AWSSDK.SQS" Version="4.0.2.25" />
   </ItemGroup>
 

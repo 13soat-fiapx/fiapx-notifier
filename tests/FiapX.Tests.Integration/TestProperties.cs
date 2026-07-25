@@ -22,6 +22,8 @@ public static class TestProperties
     [AssemblyInitialize]
     public static async Task Setup(TestContext context)
     {
+        Environment.SetEnvironmentVariable("Datadog__ApiKey", " ");
+
         _sqsContainer = new TestSqsContainer();
         _smtpContainer = new TestSmtpServerContainer();
 
