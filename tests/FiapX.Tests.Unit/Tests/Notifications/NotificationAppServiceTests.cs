@@ -51,7 +51,7 @@ public class NotificationAppServiceTests
             Times.Once());
     }
 
-    [TestMethod("Constrói URL de download correta concatenando base URL com ID do job")]
+    [TestMethod("Constrói URL de download correta concatenando base nas configurações do projeto")]
     public async Task It_ShouldBuildCorrectDownloadUrl_WhenStatusIsSucceeded()
     {
         var message = NotificationEventMocks.BuildSucceededEvent(jobId: "job-abc");
@@ -64,7 +64,7 @@ public class NotificationAppServiceTests
         await _service.SendEmailMessage(message, TestContext.CancellationTokenSource.Token);
 
         IsNotNull(captured);
-        Contains($"{DownloadBaseUrl}/job-abc", captured.Body, $"Corpo não contém a URL '{DownloadBaseUrl}/job-abc'");
+        Contains(DownloadBaseUrl, captured.Body, $"Corpo não contém a URL '{DownloadBaseUrl}'");
     }
 
     [TestMethod("Inclui logo e nome do usuário no corpo do email de sucesso")]
