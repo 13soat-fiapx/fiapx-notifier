@@ -69,7 +69,7 @@ public class NotificationAppServiceObservabilityTests
         await _service.SendEmailMessage(message, TestContext.CancellationTokenSource.Token);
 
         var duration = meterListener.DoubleMeasurementsFor(DurationMetric).Single();
-        IsTrue(duration.Value >= 0, "A duração registrada deve ser maior ou igual a zero");
+        IsGreaterThanOrEqualTo(0, duration.Value, "A duração registrada deve ser maior ou igual a zero");
         AreEqual("email", duration.Tags["channel"]);
     }
 
@@ -92,7 +92,7 @@ public class NotificationAppServiceObservabilityTests
 
         AreEqual(1, meterListener.TotalFor(FailedMetric));
         AreEqual(0, meterListener.TotalFor(SentMetric));
-        AreEqual(1, meterListener.DoubleMeasurementsFor(DurationMetric).Count);
+        HasCount(1, meterListener.DoubleMeasurementsFor(DurationMetric));
     }
 
     [TestMethod("Incrementa notifications.failed quando o status do evento é inesperado")]
