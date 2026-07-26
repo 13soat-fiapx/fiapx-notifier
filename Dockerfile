@@ -16,4 +16,6 @@ ENV TZ=America/Sao_Paulo
 WORKDIR /app
 COPY --from=build /dist .
 
+USER $APP_UID
+
 ENTRYPOINT ["dotnet", "FiapX.Worker.dll"]
