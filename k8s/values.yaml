@@ -14,8 +14,8 @@ email:
   sslRequired: false
   senderName: FIAP X
   senderAddress: "postmaster@fiapx.io"
-  logoUrl: "http://d2nyagk7gn75jo.cloudfront.net/logo_video.svg"
-  downloadBaseUrl: "http://d2nyagk7gn75jo.cloudfront.net/videos"
+  logoUrl: "https://d2nyagk7gn75jo.cloudfront.net/logo_video.svg"
+  downloadBaseUrl: "https://d2nyagk7gn75jo.cloudfront.net/videos"
 
 aws:
   useLocalstack: false
